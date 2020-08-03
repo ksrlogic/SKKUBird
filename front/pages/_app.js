@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "antd/dist/antd.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "../styles.css";
 import Head from "next/head";
 

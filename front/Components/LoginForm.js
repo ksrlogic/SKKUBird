@@ -1,11 +1,10 @@
 import React, { useState, useCallback } from "react";
-import PropTypes from "prop-types";
 import { Form, Input, Button } from "antd";
 import Link from "next/link";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 
-import { loginAction } from "../reducers";
+import { loginAction } from "../reducers/user";
 
 const StyledButton = styled.div`
   margin-top: 10px;
@@ -59,10 +58,6 @@ const LoginForm = () => {
       </StyledButton>
     </StyledForm>
   );
-};
-
-LoginForm.propTypes = {
-  setIsLoggedIn: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

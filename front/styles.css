@@ -26,3 +26,25 @@
 .vtm {
   vertical-align: middle;
 }
+.ant-card-actions > li > span {
+  display: flex;
+}
+.ksr_profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ksr_profile img {
+  width: 200px;
+  height: 200px;
+  margin-top: 100px;
+  border-radius: 50%;
+}
+
+.slides {
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 600px) {
+}

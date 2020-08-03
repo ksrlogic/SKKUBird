@@ -35,6 +35,36 @@ const Header = styled.header`
   }
 `;
 
+const SlickWrapper = styled.div`
+  height: calc(100% - 44px);
+  background: #898989;
+`;
+
+const ImageWrapper = styled.div`
+  padding: 32px;
+  text-align: center;
+
+  & img {
+    margin: 0 auto;
+    max-height: 750px;
+  }
+`;
+const Indicator = styled.div`
+  text-align: center;
+
+  & > div {
+    width: 75px;
+    height: 38px;
+    line-height: 30px;
+    border-radius: 15px;
+    background: #313131;
+    display: inline-block;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+  }
+`;
+
 const ImagesZoom = ({ images, onClose }) => {
   const settings = {
     dots: true,
@@ -50,17 +80,21 @@ const ImagesZoom = ({ images, onClose }) => {
         <h1>상세이미지</h1>
         <button onClick={onClose}>X</button>
       </Header>
-      <Slide {...settings}>
-        {images.map((y) => (
-          <div
-            className="123"
-            style={{ display: "flex", justifyContent: "center" }}
-            key={y.src}
-          >
-            <img src={y.src} alt={y.src} />
-          </div>
-        ))}
-      </Slide>
+      <SlickWrapper>
+        <div>
+          <Slide {...settings}>
+            {images.map((y) => (
+              <ImageWrapper
+                className="123"
+                style={{ display: "flex", justifyContent: "center" }}
+                key={y.src}
+              >
+                <img src={y.src} alt={y.src} />
+              </ImageWrapper>
+            ))}
+          </Slide>
+        </div>
+      </SlickWrapper>
     </Overlay>
   );
 };

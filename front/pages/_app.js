@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import withReduxSaga from "next-redux-saga";
+import Head from "next/head";
+
 import "antd/dist/antd.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../styles.css";
-import Head from "next/head";
 
 import wrapper from "../store/configureStore";
 
@@ -24,4 +26,4 @@ SkkuBird.propTypes = {
   Component: PropTypes.elementType.isRequired,
 };
 
-export default wrapper.withRedux(SkkuBird);
+export default wrapper.withRedux(withReduxSaga(SkkuBird));

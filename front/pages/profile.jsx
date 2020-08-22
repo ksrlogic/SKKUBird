@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
-import { useEffect } from "react";
 import Router from "next/router";
 import { useSelector } from "react-redux";
 

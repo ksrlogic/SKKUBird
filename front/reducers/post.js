@@ -12,47 +12,15 @@ import {
 	REMOVE_POST_REQUEST,
 	REMOVE_POST_SUCCESS,
 	REMOVE_POST_FAILURE,
+	LOAD_POSTS_REQUEST,
+	LOAD_POSTS_SUCCESS,
+	LOAD_POSTS_FAILURE,
 } from "../actions";
 
 export const initialState = {
-	mainPosts: [
-		{
-			id: 1,
-			User: {
-				id: 1,
-				nickname: "비내리는~",
-			},
-			content: "첫 번째 게시글 #해시태그 ###익스프레스",
-			Images: [
-				{
-					src: "/profile.PNG",
-				},
-				{
-					src: "https://picsum.photos/seed/picsum/200/300",
-				},
-				{
-					src: "https://picsum.photos/seed/picsum/200/300",
-				},
-			],
-			Comments: [
-				{
-					id: shortid.generate(),
-					User: {
-						nickname: "nero",
-					},
-					content: "우와 !!",
-				},
-				{
-					id: shortid.generate(),
-					User: {
-						nickname: "hero",
-					},
-					content: "멋지다!",
-				},
-			],
-		},
-	],
+	mainPosts: [],
 	imagePaths: [],
+	hasMorePosts: true,
 	addPostLoading: false, // ADD POST
 	addPostDone: false,
 	addPostError: null,
@@ -62,6 +30,9 @@ export const initialState = {
 	removePostLoading: false, // Remove POST
 	removePostDone: false,
 	removePostError: null,
+	loadPostsLoading: false, // Remove POST
+	loadPostsDone: false,
+	loadPostsError: null,
 };
 
 const dummyPost = data => ({
@@ -84,8 +55,8 @@ const dummyComment = data => ({
 	},
 });
 
-initialState.mainPosts = initialState.mainPosts.concat(
-	Array(20)
+export const generateDummyPost = number => {
+	return Array(number)
 		.fill()
 		.map(() => ({
 			id: shortid.generate(),
@@ -96,7 +67,7 @@ initialState.mainPosts = initialState.mainPosts.concat(
 			content: faker.lorem.paragraph(),
 			Images: [
 				{
-					src: faker.image.imageUrl(),
+					src: faker.image.image(),
 				},
 			],
 			Comments: [
@@ -108,8 +79,8 @@ initialState.mainPosts = initialState.mainPosts.concat(
 					content: faker.lorem.sentence(),
 				},
 			],
-		})),
-);
+		}));
+};
 
 export const addPostAction = data => {
 	return {
@@ -174,6 +145,22 @@ const reducer = (state = initialState, action) => {
 			case REMOVE_POST_FAILURE:
 				draft.removePostLoading = false;
 				draft.removePostError = action.error;
+				break;
+			case LOAD_POSTS_REQUEST:
+				draft.loadPostsLoading = true;
+				draft.loadPostsDone = false;
+				draft.loadPostsError = null;
+				draft.hasMorePosts = draft.mainPosts.length < 50;
+				break;
+			case LOAD_POSTS_SUCCESS:
+				draft.mainPosts = action.data.concat(draft.mainPosts);
+				draft.loadPostsDone = true;
+				draft.loadPostsLoading = false;
+				break;
+			case LOAD_POSTS_FAILURE:
+				draft.loadPostsDone = false;
+				draft.loadPostsLoading = false;
+				draft.loadPostsError = action.error;
 				break;
 			default:
 				break;

@@ -110,6 +110,7 @@ const reducer = (state = initialState, action) => {
 			case SIGN_UP_SUCCESS:
 				draft.signUpDone = true;
 				draft.signUpLoading = false;
+				draft.signUpError = null;
 				break;
 			case SIGN_UP_FAILURE:
 				draft.signUpLoading = false;
@@ -132,6 +133,10 @@ const reducer = (state = initialState, action) => {
 				break;
 			case REMOVE_POST_OF_ME:
 				draft.me.Posts = draft.me.Posts.filter(v => v.id !== action.data);
+				break;
+			case "SIGN_UP_RESET":
+				draft.signUpDone = false;
+				draft.signUpError = null;
 				break;
 			default:
 				break;

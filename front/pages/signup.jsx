@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Input, Checkbox, Button } from "antd";
 import styled from "styled-components";
+import Router from "next/router";
 
 import AppLayout from "../Components/AppLayout";
 import useInput from "../Hooks/useInput";
@@ -21,13 +22,28 @@ const Signup = () => {
 	const [password, onChangePassword] = useInput("");
 	const [nickname, onChangeNickname] = useInput("");
 	const [passwordCheck, setPasswordCheck] = useState("");
-
 	const [passwordError, setPasswordError] = useState(false);
 	const [termError, setTermError] = useState(false);
 
-	const { signUpLoading } = useSelector(state => state.user);
-
 	const dispatch = useDispatch();
+
+	const { signUpLoading, signUpDone, signUpError } = useSelector(state => state.user);
+	useEffect(() => {
+		if (signUpDone) {
+			Router.push("/");
+			dispatch({
+				type: "SIGN_UP_RESET",
+			});
+		}
+	}, [signUpDone]);
+	useEffect(() => {
+		if (signUpError) {
+			alert(signUpError);
+			dispatch({
+				type: "SIGN_UP_RESET",
+			});
+		}
+	}, [signUpError]);
 
 	const onChangePasswordCheck = useCallback(
 		e => {
@@ -51,7 +67,6 @@ const Signup = () => {
 		if (!term) {
 			return setTermError(true);
 		}
-		console.log(email, nickname, password);
 		dispatch({
 			type: SIGN_UP_REQUEST,
 			data: { email, password, nickname },

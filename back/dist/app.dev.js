@@ -4,7 +4,12 @@ var express = require("express");
 
 var postRouter = require("./routes/post");
 
+var db = require("./models");
+
 var app = express();
+db.sequelize.sync().then(function () {
+  console.log("db connected");
+})["catch"](console.error);
 app.use("/post", postRouter);
 app.listen(3065, function () {
   console.log("server is running");

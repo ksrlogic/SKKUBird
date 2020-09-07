@@ -1,14 +1,21 @@
 "use strict";
 
 module.exports = function (sequelize, DataTypes) {
-  var HashTag = sequelize.define("HashTag", {
-    content: {}
+  var Hashtag = sequelize.define("Hashtag", {
+    content: {
+      type: DataTypes.STRING(20),
+      allowNull: true
+    }
   }, {
     charset: "utf8mb4",
     collate: "utf8mb4_general_ci"
   });
 
-  HashTag.associate = function (db) {};
+  Hashtag.associate = function (db) {
+    db.Hashtag.belongsToMany(db.Post, {
+      through: "PostHashtag"
+    });
+  };
 
-  return User;
+  return Hashtag;
 };
